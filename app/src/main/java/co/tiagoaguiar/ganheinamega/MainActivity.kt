@@ -1,5 +1,7 @@
 package co.tiagoaguiar.ganheinamega
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +16,8 @@ import kotlin.random.Random
 /* This MainActivity is the first activity of the app, because it is set on AndroidManifest.xml,
    [you can change it]. */
 class MainActivity : AppCompatActivity() {
+    private lateinit var sharedPref : SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,6 +25,16 @@ class MainActivity : AppCompatActivity() {
         val editText: EditText = findViewById(R.id.edit_number)
         val txtResult: TextView = findViewById(R.id.txt_result)
         val btnGenerate: Button = findViewById(R.id.btn_generate)
+
+        //SAVE sharedPreferences in sharedPref
+        sharedPref = getSharedPreferences("bd", Context.MODE_PRIVATE)
+
+        //GET if there is any saved data or not [null]
+        val result = sharedPref.getString("result", null)
+
+        if(result != null) {
+            txtResult.text = "Última aposta= $result"
+        }
 
         //How to listen events
         //option 1: by using XML - add onClick at the button that is filled with the name of a function
@@ -61,6 +75,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         txtResult.text = arrangeOfNumbers.joinToString(" - ")
+        val edit = sharedPref.edit()
+        edit.putString("result", txtResult.text.toString())
+        edit.apply()
+
+        /*
+            commit = sync -> saves synchronously and returns true | false
+            apply = async -> saves asynchronously and returns nothing
+        */
     }
 
 
