@@ -30,11 +30,22 @@ class MainActivity : AppCompatActivity() {
         sharedPref = getSharedPreferences("bd", Context.MODE_PRIVATE)
 
         //GET if there is any saved data or not [null]
-        val result = sharedPref.getString("result", null)
+        val result = sharedPref.getString("result", "Nenhum regristro salvo")
 
-        if(result != null) {
-            txtResult.text = "Última aposta= $result"
-        }
+
+        //ANOTHER way of doing the above line, is using let
+//        if(result != null) {
+//            txtResult.text = "Última aposta= $result"
+//        }
+
+//        like this:
+        result?.let { txtResult.text = "Última aposta= $result" }
+
+        //if getString had a default value when no data is saved inside the variable result,
+        //we could only set when there is a data saved
+//        txtResult.text = "Última aposta= $result"
+
+
 
         //How to listen events
         //option 1: by using XML - add onClick at the button that is filled with the name of a function
@@ -78,6 +89,14 @@ class MainActivity : AppCompatActivity() {
         val edit = sharedPref.edit()
         edit.putString("result", txtResult.text.toString())
         edit.apply()
+
+        /*
+            we could write the same code above as:
+            sharedPref.edit().apply {
+               putString("result", txtResult.text.toString())
+               apply()
+            }
+        */
 
         /*
             commit = sync -> saves synchronously and returns true | false
