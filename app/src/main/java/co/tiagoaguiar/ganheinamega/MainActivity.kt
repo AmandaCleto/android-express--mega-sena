@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -33,17 +31,17 @@ class MainActivity : AppCompatActivity() {
         val result = sharedPref.getString("result", "Nenhum regristro salvo")
 
 
-        //ANOTHER way of doing the above line, is using let
-//        if(result != null) {
-//            txtResult.text = "Última aposta= $result"
-//        }
+        //ANOTHER way of doing the under line, is using let
+//      if(result != null) {
+//          txtResult.text = "Última aposta = $result"
+//      }
 
-//        like this:
-        result?.let { txtResult.text = "Última aposta= $result" }
+//      like this:
+        result?.let { txtResult.text = "Última aposta = $result" }
 
         //if getString had a default value when no data is saved inside the variable result,
         //we could only set when there is a data saved
-//        txtResult.text = "Última aposta= $result"
+//        txtResult.text = "Última aposta = $result"
 
 
 
